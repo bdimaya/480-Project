@@ -3,16 +3,29 @@ import java.util.*;
 import java.io.*;
 
 public class simsCP {
+   static Scanner scanner = new Scanner(System.in);
+
+   //Variables
+   static int quarter = 1;
+   static int studyHrs, workHrs, socialHrs, exerciseHrs, sleepHrs, hoursLeft;
    //Classes
    static HashMap<String, Class> avail;
    static HashMap<String, Class> current;
    static HashMap<String, Class> taken;
-   static Scanner scanner = new Scanner(System.in);
 
    public static void main(String[] args) {
       printIntro();
       setupGame();
-      classSignups();
+
+      //While classes are available: keep playing the game
+      while(avail.size() > 0) {
+         hoursLeft = 24;
+         classSignups();
+         System.out.println("< --------- Quarter #" + quarter + " --------- >\n");
+         getHours();
+         traverseWeeks();
+         quarter++;
+      }
    }
 
    //Game Methods
@@ -105,6 +118,46 @@ public class simsCP {
          System.out.println("]");
 
       }
+   }
 
+   public static void getHours() {
+      System.out.println("--- Hourly Distribution Setup ---");
+
+      //Studying Hours
+      System.out.print("Studying (Hours Left: " + hoursLeft + "): ");
+      studyHrs = scanner.nextInt();
+      hoursLeft -= studyHrs;
+
+      //Working Hours
+      System.out.print("Working (Hours Left: " + hoursLeft + "): ");
+      workHrs = scanner.nextInt();
+      hoursLeft -= workHrs;
+
+      //Socializing Hours
+      System.out.print("Socializing (Hours Left: " + hoursLeft + "): ");
+      socialHrs = scanner.nextInt();
+      hoursLeft -= socialHrs;
+
+      //Exercising Hours
+      System.out.print("Exercising (Hours Left: " + hoursLeft + "): ");
+      exerciseHrs = scanner.nextInt();
+      hoursLeft -= exerciseHrs;
+      
+      //Sleeping Hours = hours left remaining
+      System.out.println("Sleeping: " + hoursLeft);
+      sleepHrs = hoursLeft;
+   }
+
+   public static void traverseWeeks() {
+      for (int i = 1; i < 11; i++) {
+         System.out.println("- Week #" + i + " -");
+         try {
+            Thread.sleep(500);
+         }
+         catch (Exception e) {
+            System.out.println("Exception caught: " + e);
+            return;
+         }
+      }
    }
 }
