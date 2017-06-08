@@ -11,6 +11,7 @@ public class simsCP {
    static int clubFlag = 0;
    static int fratFlag = 0;
    static int relationshipFlag = 0;
+   static int jobFlag = 0;
    //Classes
    static HashMap<String, Class> avail;
    static HashMap<String, Class> current;
@@ -84,8 +85,8 @@ public class simsCP {
       int jobs = 1;
    
       System.out.println("\nEven with all those classes on your shoulder,");
-      System.out.println("you still decide to work.. good for you! However,");
-      System.out.println("work should not affect your studying, GRADUATION is your priority!");
+      System.out.println("you still decide to work. Good for you! However,");
+      System.out.println("work should not affect your studying, graduation is your priority!");
       setupWork();
       
       System.out.println("\nIt looks like these are the current jobs available");
@@ -211,12 +212,6 @@ public class simsCP {
       workHrs = scanner.nextInt();
       scanner.nextLine();
       hoursLeft -= workHrs;
-      
-      //Select jobs
-      if(workHrs > 0) {
-         chooseJob();
-         //Calculate monthly paycheck
-      }
 
       //Socializing Hours
       System.out.print("Socializing (Hours Left: " + hoursLeft + "): ");
@@ -247,6 +242,15 @@ public class simsCP {
          catch (Exception e) {
             System.out.println("Exception caught: " + e);
             return;
+         }
+         
+         if (quarter == 1 && i == 1) {
+            //Select jobs
+            if(jobFlag == 0) {
+               chooseJob();
+               //Calculate monthly paycheck
+               jobFlag = 1;
+            }
          }
          
          //Club event.
