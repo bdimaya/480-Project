@@ -18,6 +18,8 @@ public class simsCP {
    static HashMap<String, Class> taken;
    
    static HashMap<String, Work> job;
+   
+   static Student student = new Student();
 
    public static void main(String[] args) {
       printIntro();
@@ -38,11 +40,11 @@ public class simsCP {
          System.out.println("< --------- Quarter #" + quarter + " --------- >\n");
          getHours();
          traverseWeeks();
-         //Print each categories' grade here, at the end of the quarter.
+         quarterlyResults();
          quarter++;
       }
       
-      //Print final game results here.
+      finalResults();
       
       System.out.println("Thanks for playing!");
    }
@@ -54,6 +56,34 @@ public class simsCP {
       System.out.println("that you will have to overcome in order to get your");
       System.out.println("prestigious diploma and move out into the working world!");
       System.out.println("\nLet's get started!\n");
+      System.out.println("\n\nHere are you starting stats. Make sure to keep them in balance,");
+      System.out.println("or else things might not go your way. Good luck!");
+      System.out.println("GPA: " + student.gpa);
+      System.out.println("Social: " + student.performance * 100);
+      System.out.println("Health: " + student.health * 100);
+      System.out.println("\n");
+   }
+   
+   public static void quarterlyResults(){
+      System.out.println("\nSo you've made it through Quarter " + quarter + ", and it's");
+      System.out.println("time for a break from school. You get to go home and rest up.");
+      System.out.println("Here's how you did this quarter:");
+      System.out.println("GPA: " + student.gpa);
+      System.out.println("Social: " + student.performance * 100);
+      System.out.println("Health: " + student.health * 100);
+      System.out.println("\n\n Hope you enjoyed your break, back to school we go.");
+   }
+   
+   public static void finalResults() {
+      if (gpa < 2.0) {
+         System.out.println("Wow. This didn't go so well for you. You were academically");
+         System.out.println("disqualified, and you received no diploma. Better luck next time!");
+      } else if (gpa > 2.0 && gpa <3.0) {
+         System.out.println("Not bad! You seemed to balance work, school, and life pretty well.");
+      } else {
+         System.out.println("Well look at you!!! You graduated with flying colors, and you made");
+         System.out.println("it look easy. Go you.");
+      }
    }
 
    public static void setupGame() {
@@ -106,6 +136,7 @@ public class simsCP {
       while (jobs > 0) {
          System.out.print("Choose one: ");
          Integer selectedWork = scanner.nextInt();
+         scanner.nextLine();
          if (selectedWork != 1 && selectedWork != 2 && selectedWork != 3) {
             System.out.println("Please choose a number 1, 2 or 3");
          }
@@ -271,12 +302,12 @@ public class simsCP {
                System.out.println("\nNice choice. Your academics have boosted, but");
                System.out.println("you've lost a few hours per day from now on.\n\n");
                clubFlag = 1;
-               //Change academic grade here. Hour changes are already handled.
+               student.gpa *= 1.03;
             } else if (answer.equals("c")) {
                System.out.println("\nNice choice. Your social life has been boosted,");
                System.out.println("but you've lost a few hours per day from now on.\n\n");
                clubFlag = 1;
-               //Change social grade here. Hour changes are already handled.
+               student.performance *= 1.08;
             } else {
                System.out.println("\nYou couldn't decide on a club. No clubs for you this time around.\n\n");
             }
@@ -296,7 +327,7 @@ public class simsCP {
                System.out.println("\nSweet! You've joined Lambda Omega Lambda!");
                System.out.println("Social life boosted, but a few hours per day have been lost.\n\n");
                fratFlag = 1;
-               //Change social grade here. Hour changes are already handled.
+               student.performance *= 1.04;
             } else if (answer.equals("n")) {
                System.out.println("\nNo worries, nothing has changed.\n\n");
             } else {
@@ -320,7 +351,8 @@ public class simsCP {
                System.out.println("\nThey said yes! Let's hope for the best! Social");
                System.out.println("grade increased, academic grade decreased.\n\n");
                relationshipFlag = 1;
-               //Change social grade and academic grade here.
+               student.performance *= 1.05;
+               student.gpa *= 0.98;
             } else if (answer.equals("n")) {
                System.out.println("\nYou remain just friends. Nothing has changed.\n\n");
             } else {
@@ -338,7 +370,7 @@ public class simsCP {
             System.out.println("excuses for missed exams. Your academic grade has slightly decreased.\n\n");
             System.out.println("Press ENTER to continue.");
             scanner.nextLine();
-            //Change academic grade here.
+            student.gpa *= 0.98;
          }
          
          //Relationship or health event.
@@ -350,7 +382,8 @@ public class simsCP {
                System.out.println("Your social grade and health have been increased!\n\n");
                System.out.println("Press ENTER to continue.");
                scanner.nextLine();
-               //Change social grade and health grade here.
+               student.performance *= 1.03;
+               student.health *= 1.03;
             } else {
                System.out.println("An organization on campus is hosting a free healthy");
                System.out.println("food cooking event. You decide to go because you're");
@@ -359,7 +392,7 @@ public class simsCP {
                System.out.println("now. Your health has increased!\n\n");
                System.out.println("Press Enter to continue.");
                scanner.nextLine();
-               //Change health grade here.
+               student.health *= 1.05;
             }
          }
          
@@ -378,7 +411,8 @@ public class simsCP {
                   System.out.println("\nYou've ended the relationship. Your ex doesn't hate you,");
                   System.out.println("but it doesn't seem like you'll stay friends, either.");
                   System.out.println("Social grade decreased, academic grade increased.\n\n");
-                  //Change social and academic grades here.
+                  student.performance *= 0.97;
+                  student.gpa *= 1.03;
                } else if (answer.equals("n")) {
                   System.out.println("\nYou decide to tough it out for a couple more months");
                   System.out.println("and see how you feel in the future. Nothing has changed.\n\n");
@@ -401,7 +435,8 @@ public class simsCP {
                   System.out.println("laptop. You mostly use it to chat and play games with");
                   System.out.println("friends, but now you stay up too late some nights.");
                   System.out.println("Social grade boosted, health lowered.\n\n");
-                  //Change social grade and health here.
+                  student.performance *= 1.02;
+                  student.health *= 0.98;
                } else if (answer.equals("n")) {
                   System.out.println("\nYou follow your morals and tell your parents the truth.");
                   System.out.println("You explain how difficult your major is, so they aren't");
