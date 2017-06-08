@@ -15,6 +15,8 @@ public class simsCP {
    static HashMap<String, Class> avail;
    static HashMap<String, Class> current;
    static HashMap<String, Class> taken;
+   
+   static HashMap<String, Work> job;
 
    public static void main(String[] args) {
       printIntro();
@@ -68,6 +70,59 @@ public class simsCP {
 
    //Clean out 'taken' classes
       taken = new HashMap<String, Class>();
+   }
+   
+   public static void setupWork() {
+   //Setup work
+      job = new HashMap<String, Work>();
+      job.put("Campus Market(1)", new Work("Starbucks", 10));
+      job.put("Milestone Tavern(2)", new Work("Bartender", 15));
+      job.put("Tutoring Minions(3)", new Work("Teacher", 30));
+   }
+   
+   public static void chooseJob() throws InputMismatchException {
+      int jobs = 1;
+   
+      System.out.println("\nEven with all those classes on your shoulder,");
+      System.out.println("you still decide to work.. good for you! However,");
+      System.out.println("work should not affect your studying, GRADUATION is your priority!");
+      setupWork();
+      
+      System.out.println("\nIt looks like these are the current jobs available");
+      
+      //Print available jobs
+      System.out.print("Available: [");
+      Object[] occupations = job.keySet().toArray();
+      if (occupations.length > 0) {
+         for (int i = 0; i < occupations.length - 1; i++) {
+            System.out.print(occupations[i] + ", ");
+         }
+         System.out.print(occupations[occupations.length - 1]);
+      }
+      System.out.println("]");
+      System.out.println("Which job would you like?");
+       
+      while (jobs > 0) {
+         System.out.print("Choose one: ");
+         Integer selectedWork = scanner.nextInt();
+         if (selectedWork != 1 && selectedWork != 2 && selectedWork != 3) {
+            System.out.println("Please choose a number 1, 2 or 3");
+         }
+         
+         else {
+            if (selectedWork == 1) {
+               System.out.println("You will get $10/hr");
+            }
+            else if (selectedWork == 2) {
+               System.out.println("You will get $15/hr");
+            }
+            else if (selectedWork == 3) {
+               System.out.println("You will get $30/hr");
+            }
+            jobs--;
+         }
+         System.out.println();
+      }
    }
 
    public static void classSignups() {
@@ -156,6 +211,12 @@ public class simsCP {
       workHrs = scanner.nextInt();
       scanner.nextLine();
       hoursLeft -= workHrs;
+      
+      //Select jobs
+      if(workHrs > 0) {
+         chooseJob();
+         //Calculate monthly paycheck
+      }
 
       //Socializing Hours
       System.out.print("Socializing (Hours Left: " + hoursLeft + "): ");
@@ -181,7 +242,7 @@ public class simsCP {
       for (int i = 1; i < 11; i++) {
          System.out.println("- Week #" + i + " -");
          try {
-            Thread.sleep(500);
+            Thread.sleep(800);
          }
          catch (Exception e) {
             System.out.println("Exception caught: " + e);
@@ -219,7 +280,7 @@ public class simsCP {
          
          //Frat event.
          if (quarter == 1 && i == 7) {
-            System.out.println("It’s your campus’s Greek Rush Week.");
+            System.out.println("It is your campus Greek Rush Week.");
             System.out.println("There are a ton of cool fraternities");
             System.out.println("and sororities recruiting. Do you join one?");
             System.out.println("If yes, increase in social life, loss of");
